@@ -1,0 +1,15 @@
+services:
+  mdc:
+    image: ${MDC_IMAGE:-mdcng/mdc:latest}
+    container_name: ${MDC_CONTAINER_NAME:-mdc}
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      MDC_USERNAME: ${MDC_USERNAME:-admin}
+      MDC_PASSWORD: ${MDC_PASSWORD:?set MDC_PASSWORD in .env}
+    volumes:
+      - ${MDC_CONFIG_DIR:-./data}:/config
+      - ${MDC_MEDIA_DIR:-./media}:/media
+    ports:
+      - "${MDC_PORT:-9208}:9208"
+    restart: unless-stopped
